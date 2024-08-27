@@ -1,12 +1,36 @@
 'use client'
-
 import { useState } from 'react'
 import { ChevronDownIcon } from '@heroicons/react/20/solid'
-import { Field, Label, Switch } from '@headlessui/react'
-
+import sendFormData from '../utils/sendFormData'  // Importa tu función de envío
 export default function Home() {
-  const [agreed, setAgreed] = useState(false)
-
+    // Estado para cada campo del formulario
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+    const [company, setCompany] = useState('')
+    const [email, setEmail] = useState('')
+    const [phoneNumber, setPhoneNumber] = useState('')
+    const [country, setCountry] = useState('US')
+    const [message, setMessage] = useState('')
+    // Función para manejar el envío del formulario
+    const handleSubmit = async (e) => {
+      e.preventDefault()
+      const formData = {
+        firstName,
+        lastName,
+        company,
+        email,
+        phone_number:phoneNumber,
+        country,
+        message,
+      }
+      try {
+        await sendFormData(formData)  // Llama a la función para enviar los datos
+        alert('Form submitted successfully!')
+      } catch (error) {
+        console.error('Error submitting form:', error)
+        alert('Failed to submit form.')
+      }
+    }
   return (
     <div className="isolate bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div
@@ -18,7 +42,7 @@ export default function Home() {
             clipPath:
               'polygon(74.1% 44.1%, 100% 61.6%, 97.5% 26.9%, 85.5% 0.1%, 80.7% 2%, 72.5% 32.5%, 60.2% 62.4%, 52.4% 68.1%, 47.5% 58.3%, 45.2% 34.5%, 27.5% 76.7%, 0.1% 64.9%, 17.9% 100%, 27.6% 76.8%, 76.1% 97.7%, 74.1% 44.1%)',
           }}
-          className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#ff80b5] to-[#9089fc] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
+          className="relative left-1/2 -z-10 aspect-[1155/678] w-[36.125rem] max-w-none -translate-x-1/2 rotate-[30deg] bg-gradient-to-tr from-[#FF80B5] to-[#9089FC] opacity-30 sm:left-[calc(50%-40rem)] sm:w-[72.1875rem]"
         />
       </div>
       <div className="mx-auto max-w-2xl text-center">
@@ -27,7 +51,7 @@ export default function Home() {
           Connect this form to the backend.
         </p>
       </div>
-      <form action="#" method="POST" className="mx-auto mt-16 max-w-xl sm:mt-20">
+      <form className="mx-auto mt-16 max-w-xl sm:mt-20 " onSubmit={handleSubmit}>
         <div className="grid grid-cols-1 gap-x-8 gap-y-6 sm:grid-cols-2">
           <div>
             <label htmlFor="first-name" className="block text-sm font-semibold leading-6 text-gray-900">
@@ -38,6 +62,8 @@ export default function Home() {
                 id="first-name"
                 name="first-name"
                 type="text"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
                 autoComplete="given-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -52,6 +78,8 @@ export default function Home() {
                 id="last-name"
                 name="last-name"
                 type="text"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
                 autoComplete="family-name"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -66,6 +94,8 @@ export default function Home() {
                 id="company"
                 name="company"
                 type="text"
+                value={company}
+                onChange={(e) => setCompany(e.target.value)}
                 autoComplete="organization"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -80,6 +110,8 @@ export default function Home() {
                 id="email"
                 name="email"
                 type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 autoComplete="email"
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -97,6 +129,8 @@ export default function Home() {
                 <select
                   id="country"
                   name="country"
+                  value={country}
+                  onChange={(e) => setCountry(e.target.value)}
                   className="h-full rounded-md border-0 bg-transparent bg-none py-0 pl-4 pr-9 text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm"
                 >
                   <option>US</option>
@@ -112,6 +146,8 @@ export default function Home() {
                 id="phone-number"
                 name="phone-number"
                 type="tel"
+                value={phoneNumber}
+                onChange={(e) => setPhoneNumber(e.target.value)}
                 autoComplete="tel"
                 className="block w-full rounded-md border-0 px-3.5 py-2 pl-20 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -125,6 +161,8 @@ export default function Home() {
               <textarea
                 id="message"
                 name="message"
+                value={message}
+                onChange={(e) => setMessage(e.target.value)}
                 rows={4}
                 className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 defaultValue={''}
