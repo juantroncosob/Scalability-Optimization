@@ -1,5 +1,5 @@
 export default async function sendFormData(formData) {
-    const response = await fetch('http://34.133.99.197:3000/responses/create', {
+    const response = await fetch('http://localhost:3000/responses/create', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
