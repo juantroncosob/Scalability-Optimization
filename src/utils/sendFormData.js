@@ -8,9 +8,9 @@ export default async function sendFormData(formData) {
       body: JSON.stringify(formData),
     })
   
-    if (!response.ok) {
-      throw new Error('Failed to submit form')
-    }
+    // if (!response.ok) {
+    //   throw new Error('Failed to submit form')
+    // }
   
-    return await response.json()
+    // return await response.json()
   }
